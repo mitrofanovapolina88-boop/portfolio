@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Разработка мобильных приложений</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* ------ CSS-ПЕРЕМЕННЫЕ (темы) ------ */
+    :root {
+      --bg-body: #f8faff;
+      --bg-card: #ffffff;
+      --text-primary: #1a1a2e;
+      --text-secondary: #3d3d5c;
+      --border-color: rgba(79, 125, 243, 0.08);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 20px 40px rgba(79, 125, 243, 0.12);
+      --tag-bg: #eef3ff;
+      --tag-text: #1a1a2e;
+      --avatar-bg: #eef3ff;
+      --highlight-bg: #f4f8ff;
+      --price-bg: #1a1a2e;
+      --price-text: white;
+      --footer-border: rgba(0, 0, 0, 0.06);
+      --footer-text: #5a5a7a;
+      --badge-bg: #edf3ff;
+      --badge-text: #4a4a6a;
+      --project-tag-bg: #f0f4ff;
+      --project-tag-text: #2a3b6e;
+    }
+
+    /* Тёмная тема */
+    [data-theme="dark"] {
+      --bg-body: #12121a;
+      --bg-card: #1e1e2e;
+      --text-primary: #eaeaea;
+      --text-secondary: #b0b0c8;
+      --border-color: rgba(255, 255, 255, 0.06);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.8);
+      --tag-bg: #2a2a3e;
+      --tag-text: #d0d0e8;
+      --avatar-bg: #2a2a3e;
+      --highlight-bg: #25253a;
+      --price-bg: #4f7df3;
+      --price-text: #fff;
+      --footer-border: rgba(255, 255, 255, 0.08);
+      --footer-text: #8888aa;
+      --badge-bg: #2a2a4a;
+      --badge-text: #b0b0d0;
+      --project-tag-bg: #2a2a4a;
+      --project-tag-text: #c0c0e0;
+    }
+
+    /* ------ БАЗОВЫЕ СБРОСЫ ------ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ------ ЗАГОЛОВКИ ------ */
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    h2 i {
+      color: #4f7df3;
+      font-size: 2rem;
+    }
+
+    .section {
+      margin-top: 4rem;
+      padding-top: 1rem;
+    }
+
+    /* ------ ГЕРОЙ ------ */
+    .hero {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .hero .tagline {
+      font-size: 1.2rem;
+      color: #4f7df3;
+      font-weight: 500;
+      margin-top: 0.3rem;
+    }
+
+    .hero p {
+      max-width: 480px;
+      margin: 0.8rem auto 0;
+      color: var(--text-secondary);
+    }
+
+    .hero-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 0.8rem;
+      box-shadow: 0 8px 24px rgba(79, 125, 243, 0.2);
+      background: var(--avatar-bg);
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ------ КНОПКИ ТЕМ ------ */
+    .theme-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.5rem 0 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .theme-btn {
+      padding: 0.5rem 1.5rem;
+      border: 2px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      box-shadow: var(--shadow);
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .theme-btn.active {
+      border-color: #4f7df3;
+      background: #4f7df3;
+      color: #fff;
+    }
+
+    .theme-btn i {
+      margin-right: 6px;
+    }
+
+    /* ------ СЕТКИ КАРТОЧЕК ------ */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s, color 0.3s;
+      border: 1px solid var(--border-color);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-icon {
+      font-size: 2.4rem;
+      color: #4f7df3;
+      margin-bottom: 0.8rem;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+    }
+
+    /* ------ НАВЫКИ ------ */
+    .skill-card .card-icon {
+      color: #3776ab;
+    }
+
+    /* ------ ПРОЕКТЫ (технологии/теги) ------ */
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.8rem 0 0.3rem;
+    }
+
+    .project-tech span {
+      background: var(--project-tag-bg);
+      color: var(--project-tag-text);
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* ------ ССЫЛКИ-ПОДПУНКТЫ В ПРОЕКТАХ ------ */
+    .project-links {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .project-links a {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      border: 1px solid var(--border-color);
+      display: inline-block;
+    }
+    .project-links a:hover {
+      background: #4f7df3;
+      color: #fff;
+      transform: scale(1.03);
+    }
+
+    /* ------ ХОББИ (иконки-эмодзи) ------ */
+    .hobby-icon {
+      font-size: 2.6rem;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ------ ФУТЕР ------ */
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--footer-border);
+      text-align: center;
+      color: var(--footer-text);
+      font-size: 0.95rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem 2rem;
+    }
+
+    .footer a {
+      color: #4f7df3;
+      text-decoration: none;
+      font-weight: 500;
+      margin: 0 0.2rem;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge {
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      padding: 0.6rem 1.5rem;
+      border-radius: 60px;
+      display: inline-block;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    /* ------ АДАПТИВ ------ */
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.6rem;
+      }
+      .hero-avatar {
+        width: 80px;
+        height: 80px;
+      }
+      .theme-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ====== ШАПКА ====== -->
+  <header class="hero">
+    <div class="hero-avatar">
+      <img src="2026-07-21 13.48.05.jpg" alt="Аватар" />
+    </div>
+    <h1>Разработка мобильных приложений</h1>
+    <div class="tagline">
+      <i class="fas fa-code" style="margin-right: 8px;"></i>
+      Mobile & Web Developer
+    </div>
+    <p>
+      Создаю удобные приложения для iOS / Android и веб-сервисы.
+    </p>
+
+    <!-- КНОПКИ ТЕМ -->
+    <div class="theme-switcher">
+      <button class="theme-btn" data-theme="light" title="Светлая тема">
+        <i class="fas fa-sun"></i> Светлая
+      </button>
+      <button class="theme-btn active" data-theme="dark" title="Тёмная тема">
+        <i class="fas fa-moon"></i> Тёмная
+      </button>
+      <button class="theme-btn" data-theme="random" title="Случайная тема">
+        <i class="fas fa-random"></i> Рандом
+      </button>
+    </div>
+  </header>
+
+  <!-- ====== МОИ НАВЫКИ ====== -->
+  <section class="section">
+    <h2><i class="fas fa-cogs"></i> Мои навыки</h2>
+    <div class="grid-3">
+      <div class="card skill-card">
+        <div class="card-icon"><i class="fab fa-python"></i></div>
+        <h3>Python в IDLE</h3>
+        <p>Разработка консольных приложений, автоматизация задач, написание скриптов в стандартной среде IDLE.</p>
+      </div>
+      <div class="card skill-card">
+        <div class="card-icon"><i class="fas fa-gamepad"></i></div>
+        <h3>Python в CodeCombat</h3>
+        <p>Решение алгоритмических задач в игровом формате, написание ботов и оптимизация кода на Python.</p>
+      </div>
+      <div class="card skill-card">
+        <div class="card-icon"><i class="fas fa-robot"></i></div>
+        <h3>Python в mBlock</h3>
+        <p>Программирование роботов и микроконтроллеров (Arduino) с использованием Python через среду mBlock.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== МОИ УСЛУГИ ====== -->
+  <section class="section">
+    <h2><i class="fas fa-briefcase"></i> Мои услуги</h2>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-gamepad"></i></div>
+        <h3>Создание игр</h3>
+        <p>Разработка компьютерных и мобильных игр на Python, Scratch, Codu, CodeCombat, mBlock.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-music"></i></div>
+        <h3>Создание ИИ песен</h3>
+        <p>Генерация музыки и текстов с помощью нейросетей (Suno).</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-video"></i></div>
+        <h3>Создание ИИ видео</h3>
+        <p>Генерация видео с использованием ИИ.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-cut"></i></div>
+        <h3>Монтаж</h3>
+        <p>Видеомонтаж любой сложности: цветокоррекция, наложение эффектов, озвучка, создание титров и переходов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-code"></i></div>
+        <h3>Создание сайтов</h3>
+        <p>Разработка сайтов на HTML.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== МОИ ПРОЕКТЫ ====== -->
+  <section class="section">
+    <h2><i class="fas fa-folder-open"></i> Мои проекты</h2>
+    <div class="grid-3">
+      <!-- Музыка -->
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-music"></i></div>
+        <h3>Музыка</h3>
+        <p>Создание музыкальных треков с помощью ИИ. Примеры: поп-хиты, инструментальные саундтреки, ремиксы.</p>
+        <div class="project-links">
+          <a href="https://suno.com/s/xKLLQNB0JkiM1EJH" target="_blank">Лето</a>
+          <a href="https://suno.com/s/VBq3za0Mw281kTZj" target="_blank">Подруга</a>
+          <a href="https://suno.com/s/57GiQhBAEwrXVqh4" target="_blank">Love</a>
+        </div>
+      </div>
+      <!-- Видео -->
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-video"></i></div>
+        <h3>Видео</h3>
+        <p>Создание видеороликов с помощью нейросетей и монтаж.</p>
+        <div class="project-links">
+          <a href="Новое видео.mp4" target="_blank">Лето</a>
+          <a href="Новое видео (1).mp4" target="_blank">Танцующий огурец</a>
+        </div>
+      </div>
+      <!-- Игры (подпункты удалены) -->
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-gamepad"></i></div>
+        <h3>Игры</h3>
+        <p>Разработка игр для ПК и мобильных устройств. Платформеры, головоломки, 2D-шутеры.</p>
+        <!-- Блок project-tech удалён полностью -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== МОИ ХОББИ ====== -->
+  <section class="section">
+    <h2><i class="fas fa-heart"></i> Мои хобби</h2>
+    <div class="grid-3">
+      <div class="card">
+        <span class="hobby-icon">🎤</span>
+        <h3>Вокал</h3>
+        <p>Занимаюсь вокалом, пою на школьных мероприятиях и являюсь ведущей.</p>
+      </div>
+      <div class="card">
+        <span class="hobby-icon">💻</span>
+        <h3>Программирование</h3>
+        <p>Пишу код для души, изучаю новые технологии и создаю пет-проекты.</p>
+      </div>
+      <div class="card">
+        <span class="hobby-icon">🇬🇧</span>
+        <h3>Изучение английского</h3>
+        <p>Изучаю английский, участвую в олимпиадах и практикую разговорный язык.</p>
+      </div>
+      <div class="card">
+        <span class="hobby-icon">🇩🇪</span>
+        <h3>Изучение немецкого</h3>
+        <p>Учу немецкий с нуля, осваиваю базовую грамматику и лексику.</p>
+      </div>
+      <div class="card">
+        <span class="hobby-icon">📚</span>
+        <h3>Чтение книг</h3>
+        <p>Читаю классику, современную прозу и нон-фикшн. Люблю бумажные книги.</p>
+      </div>
+      <div class="card">
+        <span class="hobby-icon">✈️</span>
+        <h3>Путешествие</h3>
+        <p>Люблю открывать новые города, страны, знакомиться с культурой и делать фотографии.</p>
+      </div>
+      <div class="card">
+        <span class="hobby-icon">🎓</span>
+        <h3>Учёба</h3>
+        <p>Люблю учиться, средний балл 9,8. Участвую в городских и областных олимпиадах.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== ФУТЕР ====== -->
+  <footer class="footer">
+    <div class="contact-item">
+      <i class="fas fa-phone"></i>
+      <a href="tel:+375298252237">+375 29 825-22-37</a>
+    </div>
+    <div class="contact-item">
+      <i class="fab fa-telegram"></i>
+      <a href="https://t.me/mitro_politen" target="_blank">@mitro_politen</a>
+    </div>
+    <div class="contact-item">
+      <i class="fas fa-envelope"></i>
+      <a href="mailto:mitrofanovapolina88@gmail.com">mitrofanovapolina88@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <i class="fab fa-tiktok"></i>
+      <a href="https://www.tiktok.com/@mitropolina" target="_blank">@mitropolina</a>
+    </div>
+    <div class="contact-item">
+      <i class="fab fa-instagram"></i>
+      <a href="https://www.instagram.com/polina__mitrofanova" target="_blank">@polina__mitrofanova</a>
+    </div>
+    <div style="width:100%; margin-top:0.8rem; opacity:0.6;">
+      © 2026 Разработка мобильных приложений
+    </div>
+  </footer>
+
+</div>
+
+<!-- ====== JAVASCRIPT (управление темами) ====== -->
+<script>
+  (function() {
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    const STORAGE_KEY = 'selected-theme';
+
+    function setTheme(themeName) {
+      themeBtns.forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.querySelector(`.theme-btn[data-theme="${themeName}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (themeName === 'random') {
+        const randomBg = getRandomLightColor();
+        const randomCard = getRandomLightColor(0.8);
+        const randomText = getContrastColor(randomBg);
+        document.documentElement.style.setProperty('--bg-body', randomBg);
+        document.documentElement.style.setProperty('--bg-card', randomCard);
+        document.documentElement.style.setProperty('--text-primary', randomText);
+        document.documentElement.style.setProperty('--text-secondary', randomText);
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem(STORAGE_KEY, 'random');
+        return;
+      }
+
+      document.documentElement.style.removeProperty('--bg-body');
+      document.documentElement.style.removeProperty('--bg-card');
+      document.documentElement.style.removeProperty('--text-primary');
+      document.documentElement.style.removeProperty('--text-secondary');
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem(STORAGE_KEY, themeName);
+    }
+
+    function getRandomLightColor(opacity = 1) {
+      const r = Math.floor(Math.random() * 76) + 180;
+      const g = Math.floor(Math.random() * 76) + 180;
+      const b = Math.floor(Math.random() * 76) + 180;
+      return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+
+    function getContrastColor(bgColor) {
+      const match = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (!match) return '#1a1a2e';
+      const r = parseInt(match[1]);
+      const g = parseInt(match[2]);
+      const b = parseInt(match[3]);
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      return brightness > 180 ? '#1a1a2e' : '#f0f0f0';
+    }
+
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const theme = this.dataset.theme;
+        setTheme(theme);
+      });
+    });
+
+    const savedTheme = localStorage.getItem(STORAGE_KEY);
+    if (savedTheme) {
+      if (savedTheme === 'random') {
+        setTheme('random');
+      } else {
+        setTheme(savedTheme);
+      }
+    } else {
+      setTheme('dark');
+    }
+
+    console.log('🎨 Переключение тем работает!');
+  })();
+</script>
+
+</body>
+</html>
