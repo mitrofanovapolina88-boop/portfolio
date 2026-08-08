@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Митрофанова А.И. — Репетитор английского и немецкого</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ----- CSS Variables & Reset ----- */
+        :root {
+            --primary: #6c63ff;
+            --primary-dark: #5a52d5;
+            --secondary: #ff6584;
+            --bg: #f9f9ff;
+            --text: #2d2d3f;
+            --light-text: #6b6b83;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: 0.3s ease;
+            --max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ----- Header / Navigation ----- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text);
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text);
+            background: none;
+            border: none;
+        }
+
+        /* ----- Hero ----- */
+        .hero {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .hero-content h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            max-width: 600px;
+            margin-bottom: 32px;
+        }
+        .hero-content p i {
+            color: var(--primary);
+            margin-right: 6px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--text);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 8px 24px rgba(108, 99, 255, 0.3);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(108, 99, 255, 0.4);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image .avatar {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(108, 99, 255, 0.25);
+        }
+        .hero-image .avatar img {
+            width: 100%;
+            border-radius: inherit;
+            display: block;
+            background: var(--bg);
+            object-fit: cover;
+            aspect-ratio: 1/1;
+        }
+
+        /* ----- Section Titles ----- */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            font-size: 1.1rem;
+        }
+
+        /* ----- About ----- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+        .about-text p {
+            margin-bottom: 16px;
+            color: var(--light-text);
+        }
+        .about-text .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .about-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .about-features span {
+            background: var(--white);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .about-features span i {
+            color: var(--primary);
+        }
+
+        /* ----- Why Me ----- */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .why-item {
+            background: var(--white);
+            padding: 28px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(108, 99, 255, 0.06);
+        }
+        .why-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+        .why-item .icon {
+            font-size: 2.6rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .why-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+        }
+        .why-item p {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+
+        /* ----- Services ----- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 32px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(108, 99, 255, 0.06);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+        }
+        .service-card .icon {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+        .service-card p {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+        .service-card .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        /* ----- Skills ----- */
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .skill-tag {
+            background: var(--white);
+            padding: 10px 24px;
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .skill-tag i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .skill-tag:hover {
+            border-color: var(--primary);
+            transform: scale(1.04);
+            background: var(--white);
+        }
+
+        /* ----- Contact ----- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .contact-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+        }
+        .contact-info p {
+            color: var(--light-text);
+            margin-bottom: 24px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+            font-size: 1.1rem;
+        }
+        .contact-item a {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            margin-bottom: 16px;
+            background: var(--white);
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.1);
+        }
+        .contact-form textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        /* ----- Footer ----- */
+        footer {
+            background: var(--white);
+            padding: 32px 0;
+            text-align: center;
+            color: var(--light-text);
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            margin-top: 40px;
+        }
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+        .footer-socials a {
+            font-size: 1.4rem;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+        .footer-socials a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .btn-group {
+                justify-content: center;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image .avatar {
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 16px;
+                padding: 16px 0 8px;
+                background: var(--white);
+                border-radius: var(--radius);
+                margin-top: 12px;
+                box-shadow: var(--shadow);
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .hero {
+                padding-top: 120px;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .why-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .btn {
+                padding: 12px 28px;
+                font-size: 0.9rem;
+            }
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Митрофанова <span>А.И.</span></div>
+                <button class="nav-toggle" id="navToggle" aria-label="Меню">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#why">Почему я</a></li>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#skills">Скилы</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>
+                        Репетитор <br />
+                        <span class="highlight">английского &amp; немецкого</span>
+                    </h1>
+                    <p>
+                        <i class="fas fa-child"></i> Хотите, чтобы ваш ребёнок заговорил на английском или немецком легко и с удовольствием?<br>
+                        <i class="fas fa-star"></i> Ищете репетитора, который не просто «проходит программу», а действительно увлекает и влюбляет в язык?<br>
+                        <i class="fas fa-hand-peace"></i> Вам ко мне!
+                    </p>
+                    <div class="btn-group">
+                        <a href="https://t.me/anastassiyarepetitor" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-telegram"></i> Записаться на пробное
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="avatar">
+                        <img src="2026-07-21 22.57.53.jpg" alt="Митрофанова Анастасия" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">Обо мне</h2>
+            <p class="section-subtitle">Немного о моём пути и подходе</p>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        <span class="highlight">Меня зовут Митрофанова Анастасия Иосифовна.</span> 
+                        Я репетитор по английскому и немецкому языкам для детей и студентов — магистр педагогических наук. 
+                        <strong>19 лет</strong> успешной работы. Очень люблю своих учеников и свою работу.
+                    </p>
+                    <p>
+                        🏆 <strong>Стипендиат специального фонда Президента Республики Беларусь по поддержке талантливой молодёжи</strong> – это гарантия качества и результата. Мои ученики не боятся говорить на иностранном языке, получают высокие оценки и поступают в вузы мечты.
+                    </p>
+                    <p>
+                        ✅ <strong>Помощь с домашними заданиями ВНЕ занятий</strong> – я всегда на связи, если возникли трудности.<br>
+                        ✅ <strong>Гибкий формат</strong> – индивидуально, в паре или мини-группе. <strong>Офлайн</strong> (г. Барановичи, СЕВЕРНЫЙ микрорайон; г. Минск, Московский и Фрунзенский р-ны) и <strong>онлайн</strong> (по всему миру).
+                    </p>
+                    <p style="font-weight: 500; color: var(--primary);">Жду вас на нашем занятии!</p>
+                    <div class="about-features">
+                        <span><i class="fas fa-check-circle"></i> 19 лет опыта</span>
+                        <span><i class="fas fa-check-circle"></i> Магистр педагогических наук</span>
+                        <span><i class="fas fa-check-circle"></i> Стипендиат Президентского фонда</span>
+                        <span><i class="fas fa-check-circle"></i> Помощь с ДЗ вне уроков</span>
+                        <span><i class="fas fa-check-circle"></i> Офлайн / онлайн</span>
+                    </div>
+                </div>
+                <div style="background: var(--white); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow);">
+                    <h3 style="margin-bottom: 12px;">📊 Мои достижения</h3>
+                    <ul style="list-style: none; font-size: 1.1rem; color: var(--light-text);">
+                        <li style="margin-bottom: 12px;"><strong style="color: var(--text);">19 лет</strong> педагогического стажа</li>
+                        <li style="margin-bottom: 12px;"><strong style="color: var(--text);">500+</strong> учеников подготовлено</li>
+                        <li style="margin-bottom: 12px;"><strong style="color: var(--text);">98%</strong> успешно сдают экзамены</li>
+                        <li><strong style="color: var(--text);">1000+</strong> авторских игр и пособий</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHY ME ===== -->
+    <section class="section" id="why" style="background: var(--white);">
+        <div class="container">
+            <h2 class="section-title">Почему я?</h2>
+            <p class="section-subtitle">Мои главные преимущества, которые помогут вам или вашему ребёнку заговорить свободно</p>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="icon"><i class="fas fa-gamepad"></i></div>
+                    <h4>Без скучной зубрёжки</h4>
+                    <p>Игры, интерактивы, живая речь – уроки проходят интересно и результативно.</p>
+                </div>
+                <div class="why-item">
+                    <div class="icon"><i class="fas fa-user-cog"></i></div>
+                    <h4>Индивидуальный подход</h4>
+                    <p>Программа под ваш запрос, уровень и цель – работаем на результат.</p>
+                </div>
+                <div class="why-item">
+                    <div class="icon"><i class="fas fa-comment-dots"></i></div>
+                    <h4>Помощь вне занятий</h4>
+                    <p>Я всегда на связи, если возникли трудности с домашним заданием.</p>
+                </div>
+                <div class="why-item">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h4>Гибкий формат</h4>
+                    <p>Индивидуально, в паре или группе. Офлайн (Барановичи, Минск) или онлайн по всему миру.</p>
+                </div>
+                <div class="why-item">
+                    <div class="icon"><i class="fas fa-award"></i></div>
+                    <h4>Опыт и достижения</h4>
+                    <p>19 лет стажа, магистр педагогических наук, стипендиат Президентского фонда.</p>
+                </div>
+                <div class="why-item">
+                    <div class="icon"><i class="fas fa-rocket"></i></div>
+                    <h4>Результат</h4>
+                    <p>Ваш ребёнок заговорит, подтянет оценки, подготовится к экзаменам и поступлению.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="section" id="services">
+        <div class="container">
+            <h2 class="section-title">Мои услуги</h2>
+            <p class="section-subtitle">Программы для любого уровня и целей</p>
+            <div class="services-grid">
+
+                <!-- Немецкий -->
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-language"></i></div>
+                    <h3>Немецкий язык</h3>
+                    <p>Изучение немецкого с нуля до свободного разговорного языка. Авторская методика, игры и материалы помогающие выучить язык за достаточно короткий срок.</p>
+                    <span class="badge">С нуля до свободного</span>
+                </div>
+
+                <!-- Английский -->
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-globe-americas"></i></div>
+                    <h3>Английский язык</h3>
+                    <p>Улучшение произношения, помощь при сдачи экзаменов и школьной жизни. Дополнительные знания которые понадобятся всю жизнь. Также игровой подход и собственные материалы.</p>
+                    <span class="badge">Для школы и жизни</span>
+                </div>
+
+                <!-- Подготовка к экзаменам -->
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Подготовка к экзаменам</h3>
+                    <p>Подготовка к ЦТ/ЦЭ, результат 80+ баллов. Повторение программы за весь курс обучения и дополнительные материалы.</p>
+                    <span class="badge">ЦТ/ЦЭ 80+ баллов</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section class="section" id="skills" style="background: var(--white);">
+        <div class="container">
+            <h2 class="section-title">Мои скилы</h2>
+            <p class="section-subtitle">Что я умею и что использую в работе</p>
+            <div class="skills-wrapper">
+                <span class="skill-tag"><i class="fas fa-language"></i> Немецкий (C1)</span>
+                <span class="skill-tag"><i class="fas fa-language"></i> Английский (C2)</span>
+                <span class="skill-tag"><i class="fas fa-gamepad"></i> Игровой подход</span>
+                <span class="skill-tag"><i class="fas fa-pencil-ruler"></i> Авторские разработки</span>
+                <span class="skill-tag"><i class="fas fa-users"></i> Индивидуальный подход</span>
+                <span class="skill-tag"><i class="fas fa-microphone"></i> Улучшение произношения</span>
+                <span class="skill-tag"><i class="fas fa-school"></i> Помощь со школьной программой</span>
+                <span class="skill-tag"><i class="fas fa-book-open"></i> Подготовка к ЦТ/ЦЭ</span>
+                <span class="skill-tag"><i class="fas fa-video"></i> Онлайн-занятия</span>
+                <span class="skill-tag"><i class="fas fa-users"></i> Групповые и парные занятия</span>
+                <span class="skill-tag"><i class="fas fa-smile"></i> Дружелюбие и терпение</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Контакты</h2>
+            <p class="section-subtitle">Свяжитесь со мной, и я отвечу в течение 24 часов</p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Давайте учить языки вместе!</h3>
+                    <p>Выберите удобный способ связи, и мы обсудим ваши цели, уровень и составим план занятий.</p>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+375297203582</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Барановичи (Северный), Минск (Московский, Фрунзенский) + онлайн</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-instagram"></i>
+                        <span><a href="https://instagram.com/repetitor.anastasiya" target="_blank">@repetitor.anastasiya</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-barcode"></i>
+                        <span>УНП 9455277</span>
+                    </div>
+                    <div style="margin-top: 20px; display: flex; gap: 16px;">
+                        <a href="https://t.me/anastassiyarepetitor" target="_blank" style="color: var(--primary); font-size: 1.8rem;"><i class="fab fa-telegram"></i></a>
+                        <a href="#" style="color: var(--primary); font-size: 1.8rem;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://instagram.com/repetitor.anastasiya" target="_blank" style="color: var(--primary); font-size: 1.8rem;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <input type="text" id="nameInput" placeholder="Ваше имя" required />
+                    <input type="text" id="levelInput" placeholder="Уровень языка (A1, B2, ...)" />
+                    <textarea id="messageInput" placeholder="Сообщение..." required></textarea>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fab fa-telegram"></i> Отправить в Telegram
+                    </button>
+                    <p id="formMessage" style="margin-top: 12px; font-weight: 500; color: var(--primary);"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-socials">
+                <a href="https://t.me/anastassiyarepetitor" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com/repetitor.anastasiya" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2026 Митрофанова Анастасия Иосифовна. Репетитор английского и немецкого.</p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // === Mobile Navigation Toggle ===
+        const toggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        toggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            const icon = toggle.querySelector('i');
+            if (navLinks.classList.contains('open')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                const icon = toggle.querySelector('i');
+                icon.className = 'fas fa-bars';
+            });
+        });
+
+        // === Активная ссылка в навигации при скролле ===
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // === Форма: отправка в Telegram (через предзаполненную ссылку) ===
+        const form = document.getElementById('contactForm');
+        const nameInput = document.getElementById('nameInput');
+        const levelInput = document.getElementById('levelInput');
+        const messageInput = document.getElementById('messageInput');
+        const formMessage = document.getElementById('formMessage');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = nameInput.value.trim() || 'Не указано';
+            const level = levelInput.value.trim() || 'Не указан';
+            const message = messageInput.value.trim() || 'Без сообщения';
+
+            // Формируем текст для Telegram
+            const text = `📩 Новая заявка с сайта%0A%0A👤 Имя: ${encodeURIComponent(name)}%0A📊 Уровень: ${encodeURIComponent(level)}%0A💬 Сообщение: ${encodeURIComponent(message)}`;
+
+            // Открываем Telegram с предзаполненным сообщением
+            const url = `https://t.me/anastassiyarepetitor?text=${text}`;
+            window.open(url, '_blank');
+
+            formMessage.textContent = '✅ Открыт Telegram. Отправьте сообщение!';
+            formMessage.style.color = 'var(--primary)';
+            form.reset();
+            setTimeout(() => {
+                formMessage.textContent = '';
+            }, 8000);
+        });
+    </script>
+
+</body>
+</html>
